@@ -8,24 +8,69 @@ namespace euler
 {
     public static class Number11
     {
-        public static void LargestProductInGrid()
+        public static void LargestProductInGrid(int positionsToMultiple = 4)
         {
-            //print out all combinations of 4 digits
+            var grid = GRID;
 
-            // should be calculatable by: 
-            // n(i) * n(i+1) * n(i+2) * n(i+3) // in sequence in row
-            // or n(i) * n(i+20) * n(i+40) * n(i+60) // in sequence in column
-            // or n(i) * n(i+21) * n(i+42) * n(i+63) // in sequence in diagonal
+            positionsToMultiple -= 1; // adjust for being used in index comparisons
+            var rowLength = grid.GetLength(0);
+            var colLength = grid.GetLength(1);
+            long horizontal = 1;
+            long fdiaganol = 1;
+            long bdiaganol = 1;
+            long vertical = 1;
+            long largestVal = 1;
 
-            // able to omit any set where 00 is a multiple
-            // consider it a proper array and do not consider changing rows to be adjacent
-            //// if (n+3) > { any value of ROWLENGTH factorial }
-            //// if ( (n+3) % ROWLENGTH == 0 ) continue;
+            for (int i = 0; i < rowLength; i++)
+            {
+                for (int j = 0; j < colLength; j++)
+                {
+                    if (j + positionsToMultiple <= colLength - 1)
+                    {
+                        var row1 = grid[i, j];
+                        var row2 = grid[i, j + 1];
+                        var row3 = grid[i, j + 2];
+                        var row4 = grid[i, j + 3];
 
-            Console.WriteLine(TESTGRID.GetLength(0)); // returns length of row
+                        if (row1 * row2 * row3 * row4> horizontal)
+                            horizontal = row1 * row2 * row3 * row4;
+                    }
 
+                    if (i + positionsToMultiple <= rowLength - 1)
+                    {
+                        var col1 = grid[i, j];
+                        var col2 = grid[i + 1, j];
+                        var col3 = grid[i + 2, j];
+                        var col4 = grid[i + 3, j];
 
-            
+                        if (col1 * col2 * col3 * col4 > vertical)
+                            vertical = col1 * col2 * col3 * col4;
+                    }
+
+                    if (i + positionsToMultiple <= rowLength - 1 && j + positionsToMultiple <= colLength - 1)
+                    {
+                        var fdiag1 = grid[i, j];
+                        var fdiag2 = grid[i + 1, j + 1];
+                        var fdiag3 = grid[i + 2, j + 2];
+                        var fdiag4 = grid[i + 3, j + 3];
+
+                        if (fdiag1 * fdiag2 * fdiag3 * fdiag4 > fdiaganol)
+                            fdiaganol = fdiag1 * fdiag2 * fdiag3 * fdiag4;
+                    }
+
+                    if (i + positionsToMultiple >= 0 && j - positionsToMultiple >= 0 && i + positionsToMultiple <= rowLength - 1 && j - positionsToMultiple <= colLength - 1)
+                    {
+                        var bdiag1 = grid[i, j];
+                        var bdiag2 = grid[i + 1, j - 1];
+                        var bdiag3 = grid[i + 2, j - 2];
+                        var bdiag4 = grid[i + 3, j - 3];
+
+                        if (bdiag1 * bdiag2 * bdiag3 * bdiag4 > bdiaganol)
+                            bdiaganol = bdiag1 * bdiag2 * bdiag3 * bdiag4;
+                    }
+                }
+            }
+            Console.WriteLine($"horizontal: {horizontal} \nvertical: {vertical} \nfdiaganol: {fdiaganol} \nbdiaganol: {bdiaganol}");
             //greatest product of 4 adjacent numbers in the same direction
         }
 
