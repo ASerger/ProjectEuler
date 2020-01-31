@@ -43,12 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Number10.cs" />
     <Compile Include="Number11.cs" />
     <Compile Include="Number3.cs" />
     <Compile Include="Number4.cs" />
     <Compile Include="Number5.cs" />
     <Compile Include="Number6.cs" />
     <Compile Include="Number8.cs" />
+    <Compile Include="Number9.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
